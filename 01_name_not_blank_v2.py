@@ -14,4 +14,4 @@ def not_blank(question, error_message):
 
 
 #Main Routine goes here
-name = not_blank("Name: ", "Sorry - this can't be blank, please enter your name")
+name = not_blank("Name: ", "Sorry - this can't be blank, please enter your name.")
