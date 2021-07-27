@@ -1,15 +1,12 @@
 # start of loop
 
+# initialise loop so it runs at least once
 name = ""
 ticket_count = 0
 max_tickets = 5
 
 while name != "xxx" and ticket_count < max_tickets:
+
+    # get details
     name = input("Name: ")
-    if any(char.isdigit() for char in name) or name == "":
-        print("Please enter only alphabetical characters in your name.")
-    else:
-        ticket_count += 1
-
-
-
+    ticket_count += 1

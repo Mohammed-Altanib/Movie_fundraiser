@@ -5,7 +5,10 @@ ticket_count = 0
 max_tickets = 5
 
 while name != "xxx" and ticket_count < max_tickets:
-    print("You have {} seats left".format(max_tickets - ticket_count))
+    if max_tickets - ticket_count == 1:
+        print("You have {} seat left".format(max_tickets - ticket_count))
+    else:
+        print("You have {} seats left".format(max_tickets - ticket_count))
 
     # Get details
     name = input("Name: ")
@@ -17,6 +20,9 @@ while name != "xxx" and ticket_count < max_tickets:
 
 if ticket_count == max_tickets:
     print("You have sold all available tickets!")
+elif max_tickets - ticket_count == 1:
+    print(("You have sold {} tickets. \n"
+          "There is {} seat still available".format(ticket_count, max_tickets - ticket_count)))
 else:
     print("You have sold {} tickets. \n"
-          "There are {} seat(s) still available".format(ticket_count, max_tickets - ticket_count))
+          "There are {} seats still available".format(ticket_count, max_tickets - ticket_count))
