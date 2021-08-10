@@ -40,6 +40,7 @@ def integer_checker(question):
 name = ""
 ticket_count = 0
 max_tickets = 5
+ticket_sales = 0
 
 while name != "xxx" and ticket_count < max_tickets:
     if max_tickets - ticket_count == 1:
@@ -65,7 +66,25 @@ while name != "xxx" and ticket_count < max_tickets:
         print("That is very old - it looks like a mistake")
         continue
 
+# Start of ticket loop
+    # Calculate the ticket price based on age
+    if age < 16:
+        ticket_price = 7.50
+    elif age > 64:
+        ticket_price = 6.50
+    else:
+        ticket_price = 10.50
+
     ticket_count += 1
+    ticket_sales += ticket_price
+
+    # Print out the name and the ticket cost of the individual
+    print("{} : ${:.2f}".format(name, ticket_price))
+# End of ticket loop
+
+# Calculate ticket profit
+ticket_profit = ticket_sales - (5 * ticket_count)
+print("Ticket profit: ${:.2f}".format(ticket_profit))
 
 if ticket_count == max_tickets:
     print("You have sold all available tickets!")
@@ -73,13 +92,12 @@ else:
     print("You have sold {} tickets. \n"
               "There are {} seat(s) still available".format(ticket_count, max_tickets - ticket_count))
 
-    # Calculate ticket price
 
-    # Loop to ask for snacks
+# Loop to ask for snacks
 
-    # Calculate snack price
+# Calculate snack price
 
-    # Ask for payment method (and apply subcharge if necessary)
+# Ask for payment method (and apply subcharge if necessary)
 
 # Calculate total sales and profit
 
