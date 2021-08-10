@@ -7,7 +7,7 @@ def not_blank(question):
     while not valid:
         response = input(question)
 
-        if response != "":
+        if response.strip() != "":
             return response
         else:
             print("Sorry - this can't be blank.")
