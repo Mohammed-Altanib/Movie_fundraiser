@@ -1,36 +1,26 @@
-# start of loop
+snack = ""
+snack_ok = ""
 
-name = ""
-ticket_count = 0
-max_tickets = 5
+for i in range(0, 3):
+    desired_snack = int(input("Enter the NUMBER corresponding to the snack for the snack you want\n"
+                             "[1] Popcorn\n"
+                             "[2] M&M's\n"
+                             "[3] Pita chips\n"
+                             "[4] Water\n"
+                             "Snack: "))
+    for var_list in valid_snacks:
+        if desired_snack in var_list:
+            snack = var_list[0].title()
+            snack_ok = "yes"
+            break
+        else:
+            snack_ok = "no"
 
-# Display available seats left before booking
-while name != "xxx" and ticket_count < max_tickets:
-    if max_tickets - ticket_count == 1:
-        print("You have {} seat left".format(max_tickets - ticket_count))
+    if snack_ok == "yes":
+        print("Snack choice:", snack)
     else:
-        print("You have {} seats left".format(max_tickets - ticket_count))
+        print("Invalid choice")
 
-    # Get details + not blank function
-    name = input("Name: ")
-    if any(char.isdigit() for char in name) or name.strip() == "":
-        print()
-        print("Please enter only alphabetical characters in your name.")
-        print()
-    elif name == "xxx":
-        continue
-    else:
-        ticket_count += 1
-        print()
 
-# Display available seats left after booking
-if ticket_count == max_tickets:
-    print("You have sold all available tickets!")
-elif max_tickets - ticket_count == 1:
-    print(("You have sold {} tickets. \n"
-          "There is {} seat still available".format(ticket_count, max_tickets - ticket_count)))
-else:
-    print("You have sold {} tickets. \n"
-          "There are {} seats still available".format(ticket_count, max_tickets - ticket_count))
 
 
