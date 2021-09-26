@@ -92,10 +92,10 @@ def get_snack():
     # , and possible abbreviations etc>
 
     valid_snacks = [
-        ["popcorn", "p", "corn", "a"],
-        ["M&M's", "m&m's", "mms", "m", "b"],
+        ["popcorn", "p", "pop", "corn", "a"],
+        ["M&M's", "m&m's", "mms", "mm", "m", "b"],
         ["pita chips", "chips", "pc", "pita", "c"],
-        ["water", "w", "d"],
+        ["water", "w", "h2O", "d"],
         ["orange juice", "oj", "o", "juice", "e"]
     ]
 
@@ -104,7 +104,7 @@ def get_snack():
     snack_order = []
 
     desired_snack = ""
-    while desired_snack != "xxx":
+    while desired_snack != "xxx" or desired_snack != "n":
 
         snack_row = []
 
@@ -176,8 +176,17 @@ orange_juice = []
 
 snack_lists = [popcorn, mms, pita_chips, water, orange_juice]
 
+# store subcharge multiplier
 surcharge_mult_list = []
+
+# lists to store summary data
+summary_headings = ["Popcorn", "M&M's", "Pita Chips", "Water",
+                    "Orange Juice", "Snack Profit", "Ticket Profit",
+                    "Total Profit"]
+summary_data = []
+
 # data frame dictionary
+
 movie_data_dict = {
     'Name': all_names,
     'Ticket': all_tickets,
@@ -187,6 +196,12 @@ movie_data_dict = {
     'M&Ms': mms,
     'Orange Juice': orange_juice,
     'Surcharge_Multiplier': surcharge_mult_list
+}
+
+# Summary Dictionary
+summary_data_dict = {
+    'Item': summary_headings,
+    'Amount': summary_data
 }
 
 # cost of each snack
@@ -224,24 +239,7 @@ while name != "xxx" and ticket_count < max_tickets:
     all_tickets.append(ticket_price)
 
     # Get snacks
-
-    # ask the user if they want a snack
-    check_snack = "invalid choice"
-    while check_snack == "invalid choice":
-        want_snack = input("Do you want to order snacks?: ").lower()
-        check_snack = snack_checker(want_snack, yes_no)
-
-        # If user doesnt enter a valid option (yes/y or no/n), generate an error and ask the question again
-        if check_snack == "invalid choice":
-            print("Please enter a valid option")
-            print()
-
-    # If they want snacks, ask what snacks they want
-    if check_snack == "Yes":
-        snack_order = get_snack()
-
-    else:
-        snack_order = []
+    snack_order = get_snack()
 
     # Assume no snack has been bought
     for item in snack_lists:
@@ -274,7 +272,6 @@ while name != "xxx" and ticket_count < max_tickets:
 # End of ticket loop
 
 # print details
-# print details
 movie_frame = pandas.DataFrame(movie_data_dict)
 movie_frame = movie_frame.set_index('Name')
 
@@ -297,15 +294,46 @@ movie_frame = movie_frame.rename(columns={'Orange Juice': 'OJ',
                                           'Pita Chips': 'Chips',
                                           'Surcharge_Multiplier': 'SM'})
 
+# set up summary dataframe
+# populate snack items
+for item in snack_lists:
+    summary_data.append(sum(item))
+
+# get snack profit
+# get snack total from panda
+snack_total = movie_frame['Snacks'].sum()
+snack_profit = snack_total * 0.2
+summary_data.append(snack_profit)
+
+# get ticket profit and add to list
+ticket_profit = ticket_sales - (5 * ticket_count)
+summary_data.append(ticket_profit)
+
+# work out total profit and add to list
+total_profit = snack_profit + ticket_profit
+summary_data.append(total_profit)
+
+# create summary frame
+summary_frame = pandas.DataFrame(summary_data_dict)
+summary_frame = summary_frame.set_index('item')
+
+# set up columns to be printed
 pandas.set_option('display.max_columns', None)
+
+# display numbers in 2 dp
 pandas.set_option('precision', 2)
 
-print_all = input("Print all columns? (y) for yes: ")
-if print_all == "y":
-    print(movie_frame)
-else:
-    print(movie_frame[['Ticket', 'Subtotal',
+print()
+print("*** Ticket / Snack Information ***")
+print()
+print(movie_frame[['Ticket', 'Subtotal',
                        'Surcharge', 'Total']])
+
+print()
+
+print("*** Snack / Profit summary")
+print()
+print(summary_frame)
 
 
 # Calculate ticket profit
