@@ -301,7 +301,7 @@ for item in snack_lists:
 
 # get snack profit
 # get snack total from panda
-snack_total = movie_frame['Snacks'].sum()
+snack_total = movie_frame['Snacks'].sum
 snack_profit = snack_total * 0.2
 summary_data.append(snack_profit)
 
@@ -326,7 +326,7 @@ pandas.set_option('precision', 2)
 print()
 print("*** Ticket / Snack Information ***")
 print()
-print(movie_frame[['Ticket', 'Subtotal',
+print(movie_frame[['Ticket', 'Snacks', 'Subtotal',
                        'Surcharge', 'Total']])
 
 print()
